@@ -7,12 +7,28 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>home</ion-title>
+    <ion-title>Home</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+
+  <ion-list>
+    <ion-row ion-item *ngFor="let book of books">
+        <ion-col (click)="bookSelected(book)">
+          {{book?.name}}
+        </ion-col>
+        <ion-col>
+          <button style="margin-top: auto;float: right" ion-button="" color="danger" (click)="toggleFavourite(book)" *ngIf="!favouriteBooks_id.includes(book.id)">
+            <ion-icon name="heart"></ion-icon>
+          </button>
+          <button style="margin-top: auto;float: right" ion-button="" color="dark" (click)="toggleFavourite(book)" *ngIf="favouriteBooks_id.includes(book.id)">
+            <ion-icon name="close"></ion-icon>
+          </button>
+        </ion-col>
+    </ion-row>
+  </ion-list>
 
 </ion-content>

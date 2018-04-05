@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import {IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {DbApiService} from "../../services/db-api.service";
 
 /**
  * Generated class for the BookDetailsPage page.
@@ -14,12 +15,27 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'book-details.html',
 })
 export class BookDetailsPage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  selectedBook:any;
+  bookData:any;
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+              private dbApi: DbApiService,
+              private loader: LoadingController) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BookDetailsPage');
+    this.selectedBook = this.navParams.data;
+
+    let loader = this.loader.create({
+      content: "Accediendo a los datos del libro..."
+    });
+
+    loader.present().then(()=>{
+      this.dbApi.getBookData(this.selectedBook.id).subscribe((bookData) => {
+        this.bookData = bookData;
+        loader.dismiss();
+      });
+    });
+
   }
 
 }
