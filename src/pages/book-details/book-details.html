@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>book_details</ion-title>
+    <ion-title>{{bookData?.name}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,7 +15,7 @@
 
 <ion-content padding>
 <ion-card>
-  <img src="/src/assets/imgs/book_image.jpg" alt="Libro_Template">
+  <img src="/resources/book_image.jpg" alt="Libro_Template">
   <ion-card-content>
     <ion-card-title text-center="">
       {{bookData?.name}}
