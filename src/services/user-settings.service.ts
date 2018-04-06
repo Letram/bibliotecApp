@@ -33,11 +33,15 @@ export class UserSettingsService {
       value => !!value);
   }
 
-  getAllFavourites(){
+  getAllFavourites(getData=false){
     let books = [];
     this.storage.forEach((value)=>{
-      books.push(JSON.parse(value).id);
+      if(!getData)
+        books.push(JSON.parse(value).id);
+      else
+        books.push(JSON.parse(value));
     });
     return books;
   }
+
 }
