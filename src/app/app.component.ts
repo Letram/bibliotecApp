@@ -9,6 +9,7 @@ import {ListDetailsPage} from "../pages/list-details/list-details";
 import {BookDetailsPage} from "../pages/book-details/book-details";
 import {MyListsPage} from "../pages/my-lists/my-lists";
 import {UserSettingsService} from "../services/user-settings.service";
+import {DbApiService} from "../services/db-api.service";
 
 @Component({
   templateUrl: 'app.html'
@@ -17,13 +18,14 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = HomePage;
-  public bookDetailsPage = BookDetailsPage;
-
   pages: Array<{title: string, component: any}>;
-  books:any=[];
+
+  favouriteBooks:any=[];
+  myLists:any=[];
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
               private userSettings: UserSettingsService,
-              private events: Events) {
+              private events: Events,
+              private dbApi: DbApiService) {
     this.initializeApp();
     // used for an example of ngFor and navigation
     this.pages = [
@@ -35,9 +37,12 @@ export class MyApp {
     ];
 
     this.events.subscribe("favourites:changed", ()=>{
-      this.books = this.userSettings.getAllFavourites(true);
+      this.favouriteBooks = this.userSettings.getAllFavourites(true);
     });
-    this.books = this.userSettings.getAllFavourites(true);
+    this.favouriteBooks = this.userSettings.getAllFavourites(true);
+    this.dbApi.getLists().subscribe((lists) => {
+      this.myLists = lists;
+    });
   }
 
   initializeApp() {
@@ -50,13 +55,11 @@ export class MyApp {
     });
   }
 
-  openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
-  }
-
+  //******************************************************************************************//
   openBookDetails(book){
     this.nav.push(BookDetailsPage, book);
+  }
+  openListsPage(){
+    this.nav.push(MyListsPage);
   }
 }
