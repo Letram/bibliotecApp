@@ -27,17 +27,22 @@ export class DbApiService {
 
   addNewList(value: String) {
     let newList = {"name": value};
-    this.fb.object(`my-lists/${newList.name}`).update(newList).then(()=>console.log("Nueva lista: " + JSON.stringify(newList)));
+    this.fb.object(`my-lists/${newList.name}`).update(newList);
   }
 
   pushBookToList(bookList: any, bookData: any, bookId: any) {
+    let index = 0;
+    if(bookList.books)index = bookList.books.length;
+
     let book_data = {
       id: bookId,
       name: bookData.name,
       author: bookData.author,
       genre: bookData.genre,
-      publishDate: bookData.publishDate
+      publishDate: bookData.publishDate,
+      index: index
     };
-    this.fb.list(`my-lists/${bookList.name}/books/`).push(book_data).then(()=>console.log("Book added to " + bookList.name + " => " + JSON.stringify(bookData)));
+
+    this.fb.list(`my-lists/${bookList.name}/books/`).set(index.toString(), book_data);
   }
 }

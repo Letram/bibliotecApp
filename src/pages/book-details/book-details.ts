@@ -1,5 +1,12 @@
 import {Component} from '@angular/core';
-import {ActionSheetController, IonicPage, LoadingController, NavController, NavParams} from 'ionic-angular';
+import {
+  ActionSheetController,
+  AlertController,
+  IonicPage,
+  LoadingController,
+  NavController,
+  NavParams
+} from 'ionic-angular';
 import {DbApiService} from "../../services/db-api.service";
 import {ListDetailsPage} from "../list-details/list-details";
 
@@ -23,7 +30,8 @@ export class BookDetailsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private dbApi: DbApiService,
               private loader: LoadingController,
-              private actionSheetController: ActionSheetController) {}
+              private actionSheetController: ActionSheetController,
+              private alertController: AlertController) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BookDetailsPage');
@@ -54,7 +62,12 @@ export class BookDetailsPage {
         handler: () => {
           console.log("Se ha clickado: " + this.bookLists[i].name);
           this.dbApi.pushBookToList(this.bookLists[i], this.bookData, this.selectedBook.id);
-          this.navCtrl.push(ListDetailsPage, this.bookLists[i]);
+          let alert = this.alertController.create({
+            title: 'New book in '+this.bookLists[i].name,
+            subTitle: '\"' + this.bookData.name + '\" added to ' + this.bookLists[i].name + "!",
+            buttons: ['Ok!']
+          });
+          alert.present();
         }
       });
     }

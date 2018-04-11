@@ -15,6 +15,6 @@
 
 <ion-content padding>
   <ion-list>
-    <button *ngFor="let book of currentList?.books" ion-item="" (click)="openBookDetails()">{{book?.name}}</button>
+    <button *ngFor="let book of bookList" ion-item="" (click)="openBookDetails(book)">{{book?.name}}</button>
   </ion-list>
 </ion-content>
