@@ -15,11 +15,14 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ListDetailsPage {
 
+  currentList:any;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ListDetailsPage');
+    this.currentList = this.navParams.data;
+    console.log(JSON.stringify(this.currentList.books));
   }
 
 }

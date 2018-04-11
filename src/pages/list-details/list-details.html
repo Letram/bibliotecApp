@@ -7,12 +7,14 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>list_details</ion-title>
+    <ion-title>{{currentList?.name}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
+  <ion-list>
+    <button *ngFor="let book of currentList?.books" ion-item="" (click)="openBookDetails()">{{book?.name}}</button>
+  </ion-list>
 </ion-content>

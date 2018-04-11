@@ -28,13 +28,6 @@ export class MyApp {
               private dbApi: DbApiService) {
     this.initializeApp();
     // used for an example of ngFor and navigation
-    this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage },
-      { title: 'List-Details', component: ListDetailsPage},
-      { title: 'Book-Details', component: BookDetailsPage},
-      { title: 'My-Lists', component: MyListsPage}
-    ];
 
     this.events.subscribe("favourites:changed", ()=>{
       this.favouriteBooks = this.userSettings.getAllFavourites(true);
@@ -61,5 +54,8 @@ export class MyApp {
   }
   openListsPage(){
     this.nav.push(MyListsPage);
+  }
+  openListDetails(list){
+    this.nav.push(MyListsPage).then(()=>this.nav.push(ListDetailsPage, list));
   }
 }

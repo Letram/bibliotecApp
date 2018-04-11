@@ -18,7 +18,9 @@
     <ion-input #listName type="text" placeholder="Your list name here..." ></ion-input>
     <button ion-button color="danger" (click)="addList(listName.value)" item-right><ion-icon name="add"></ion-icon></button>
   </ion-item>
-  <ion-list>
-    <button ion-item="" *ngFor="let list of myLists">{{list?.name}}</button>
-  </ion-list>
+  <ion-card>
+    <ion-list>
+      <button ion-item="" (click)="openListDetails(list)" *ngFor="let list of myLists">{{list?.name}}</button>
+    </ion-list>
+  </ion-card>
 </ion-content>

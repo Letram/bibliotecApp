@@ -34,9 +34,15 @@
   </ion-card-content>
   <ion-row>
     <ion-col center text-center="">
-      <button ion-button="" icon-left="" clear small>
+      <button ion-button="" icon-left="" (click)="openActionSheet()">
         <ion-icon name="bookmark"></ion-icon>
         <div>Add to booklist</div>
+      </button>
+    </ion-col>
+    <ion-col center text-center="">
+      <button ion-button="" color="danger" icon-left="">
+        <ion-icon name="heart"></ion-icon>
+        <div>Add to favourites</div>
       </button>
     </ion-col>
   </ion-row>

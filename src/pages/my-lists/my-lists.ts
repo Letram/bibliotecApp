@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import {DbApiService} from "../../services/db-api.service";
+import {ListDetailsPage} from "../list-details/list-details";
 
 /**
  * Generated class for the MyListsPage page.
@@ -31,5 +32,13 @@ export class MyListsPage {
     if(value != ""){
       this.dbApi.addNewList(value);
     }
+  }
+
+  openListDetails(list: any) {
+    this.navCtrl.push(ListDetailsPage, list);
+  }
+
+  public getLists(){
+    return this.myLists;
   }
 }
