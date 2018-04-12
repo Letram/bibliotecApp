@@ -15,6 +15,13 @@
 
 <ion-content padding>
   <ion-list>
-    <button *ngFor="let book of bookList" ion-item="" (click)="openBookDetails(book)">{{book?.name}}</button>
+    <ion-item *ngFor="let book of bookList">
+      <ion-row>
+        <ion-col align-self-center="" (click)="openBookDetails(book)">
+          {{book?.name}}
+        </ion-col>
+        <button ion-button="" color="danger" item-right="" (click)="removeBook(book?.index)"><ion-icon name="close"></ion-icon></button>
+      </ion-row>
+    </ion-item>
   </ion-list>
 </ion-content>

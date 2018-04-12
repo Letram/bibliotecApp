@@ -45,4 +45,16 @@ export class DbApiService {
 
     this.fb.list(`my-lists/${bookList.name}/books/`).set(index.toString(), book_data);
   }
+
+  getBookList(bookList):Observable<any>{
+    return this.fb.list(`my-lists/${bookList.name}/books`).valueChanges();
+  }
+
+  removeBookFromList(bookList, index){
+    this.fb.list(`my-lists/${bookList.name}/books`).remove(index.toString());
+  }
+
+  removeList(bookList){
+    this.fb.list(`my-lists/${bookList.name}`).remove();
+  }
 }

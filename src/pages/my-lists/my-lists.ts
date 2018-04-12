@@ -41,4 +41,8 @@ export class MyListsPage {
   public getLists(){
     return this.myLists;
   }
+
+  removeList(list){
+    this.dbApi.removeList(list);
+  }
 }
