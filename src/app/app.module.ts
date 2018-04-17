@@ -18,6 +18,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import {DbApiService} from "../services/db-api.service";
 import {IonicStorageModule} from "@ionic/storage";
 import {UserSettingsService} from "../services/user-settings.service";
+import {UserAuthService} from "../services/user-auth.service";
+import {LoginPage} from "../pages/login/login";
 
 export const firebaseConfig = {
   apiKey: "AIzaSyAHdOnwueJd0P6QXsYX7kPH8Lu0Q2pDX0o",
@@ -35,7 +37,8 @@ export const firebaseConfig = {
     ListPage,
     MyListsPage,
     BookDetailsPage,
-    ListDetailsPage
+    ListDetailsPage,
+    LoginPage
   ],
   imports: [
     BrowserModule,
@@ -52,7 +55,8 @@ export const firebaseConfig = {
     ListPage,
     MyListsPage,
     BookDetailsPage,
-    ListDetailsPage
+    ListDetailsPage,
+    LoginPage
   ],
   providers: [
     StatusBar,
@@ -60,7 +64,8 @@ export const firebaseConfig = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AngularFireDatabase,
     DbApiService,
-    UserSettingsService
+    UserSettingsService,
+    UserAuthService
   ]
 })
 export class AppModule {}

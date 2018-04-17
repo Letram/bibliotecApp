@@ -1,11 +1,13 @@
 import {Injectable} from '@angular/core';
 import {AngularFireDatabase} from "angularfire2/database";
 import {Observable} from "rxjs/Observable";
+import {UserAuthService} from "./user-auth.service";
 
 @Injectable()
 export class DbApiService {
   currentBook: any = {};
-  constructor(private  fb: AngularFireDatabase) {}
+  constructor(private  fb: AngularFireDatabase,
+              private userAuth: UserAuthService) {}
 
   getBooks():Observable<any>{
     return this.fb.list('books').valueChanges();
@@ -16,18 +18,14 @@ export class DbApiService {
       .valueChanges()
       .map(resp => this.currentBook = resp);
   }
-  getCurrentBook(){
-    return this.currentBook;
-  }
-
   getLists():Observable<any>{
-    return this.fb.list('my-lists')
+    return this.fb.list(`lists/${this.userAuth.getUserHash()}`)
       .valueChanges();
   }
 
   addNewList(value: String) {
     let newList = {"name": value};
-    this.fb.object(`my-lists/${newList.name}`).update(newList);
+    this.fb.object(`lists/${this.userAuth.getUserHash()}/${newList.name}`).update(newList);
   }
 
   pushBookToList(bookList: any, bookData: any, bookId: any) {
@@ -43,18 +41,18 @@ export class DbApiService {
       index: index
     };
 
-    this.fb.list(`my-lists/${bookList.name}/books/`).set(index.toString(), book_data);
+    this.fb.list(`lists/${this.userAuth.getUserHash()}/${bookList.name}/books/`).set(index.toString(), book_data);
   }
 
   getBookList(bookList):Observable<any>{
-    return this.fb.list(`my-lists/${bookList.name}/books`).valueChanges();
+    return this.fb.list(`lists/${this.userAuth.getUserHash()}/${bookList.name}/books`).valueChanges();
   }
 
   removeBookFromList(bookList, index){
-    this.fb.list(`my-lists/${bookList.name}/books`).remove(index.toString());
+    this.fb.list(`lists/${this.userAuth.getUserHash()}/${bookList.name}/books`).remove(index.toString());
   }
 
   removeList(bookList){
-    this.fb.list(`my-lists/${bookList.name}`).remove();
+    this.fb.list(`lists/${this.userAuth.getUserHash()}/${bookList.name}`).remove();
   }
 }

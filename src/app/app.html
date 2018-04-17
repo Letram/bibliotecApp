@@ -10,8 +10,8 @@
       <!--favourite books-->
       <ion-item-divider>Favourite Books</ion-item-divider>
       <button *ngFor="let book of favouriteBooks" menuClose="" detail-push="" ion-item (click)="openBookDetails(book)">{{book?.name}}</button>
-      <ion-item-divider menuClose="" (click)="openListsPage()">My lists</ion-item-divider>
-      <button *ngFor="let list of myLists" menuClose="" detail-push="" ion-item="" (click)="openListDetails(list)">{{list.name}}</button>
+      <ion-item><button ion-button="" menuClose="" (click)="openListsPage()">My lists!</button></ion-item>
+
     </ion-list>
   </ion-content>
 

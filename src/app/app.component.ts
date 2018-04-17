@@ -10,6 +10,8 @@ import {BookDetailsPage} from "../pages/book-details/book-details";
 import {MyListsPage} from "../pages/my-lists/my-lists";
 import {UserSettingsService} from "../services/user-settings.service";
 import {DbApiService} from "../services/db-api.service";
+import {LoginPage} from "../pages/login/login";
+import {UserAuthService} from "../services/user-auth.service";
 
 @Component({
   templateUrl: 'app.html'
@@ -17,7 +19,7 @@ import {DbApiService} from "../services/db-api.service";
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: any = LoginPage;
   pages: Array<{title: string, component: any}>;
 
   favouriteBooks:any=[];
@@ -25,7 +27,8 @@ export class MyApp {
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
               private userSettings: UserSettingsService,
               private events: Events,
-              private dbApi: DbApiService) {
+              private dbApi: DbApiService,
+              private userAuth: UserAuthService) {
     this.initializeApp();
     // used for an example of ngFor and navigation
 
@@ -58,4 +61,12 @@ export class MyApp {
   openListDetails(list){
     this.nav.push(MyListsPage).then(()=>this.nav.push(ListDetailsPage, list));
   }
+  logout(){
+    this.userAuth.signOut().then(()=>{
+      this.nav.setRoot(LoginPage).then(()=>{
+        this.nav.popToRoot();
+      });
+    });
+  }
+
 }

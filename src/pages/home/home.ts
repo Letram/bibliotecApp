@@ -3,6 +3,8 @@ import {Events, IonicPage, LoadingController, NavController, NavParams, ToastCon
 import {DbApiService} from "../../services/db-api.service";
 import {BookDetailsPage} from "../book-details/book-details";
 import {UserSettingsService} from "../../services/user-settings.service";
+import {UserAuthService} from "../../services/user-auth.service";
+import {LoginPage} from "../login/login";
 
 /**
  * Generated class for the HomePage page.
@@ -24,6 +26,7 @@ export class HomePage {
               private loader:LoadingController,
               private toaster: ToastController,
               private userSettings: UserSettingsService,
+              private userAuth: UserAuthService,
               private events: Events) {
   }
 
@@ -69,5 +72,13 @@ export class HomePage {
       position: "bottom"
     });
     toast.present();
+  }
+
+  logout(){
+    this.userAuth.signOut().then(()=>{
+      this.navCtrl.setRoot(LoginPage).then(()=>{
+        this.navCtrl.popToRoot();
+      });
+    });
   }
 }
