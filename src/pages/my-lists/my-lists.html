@@ -1,0 +1,33 @@
+<!--
+  Generated template for the MyListsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Mis listas</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+    <ion-label color="danger" stacked>New List</ion-label>
+    <ion-input #listName type="text" placeholder="Your list name here..." ></ion-input>
+    <button ion-button color="danger" (click)="addList(listName.value)" item-right><ion-icon name="add"></ion-icon></button>
+  </ion-item>
+  <ion-card>
+    <ion-list>
+      <ion-item *ngFor="let list of myLists">
+        <ion-row>
+          <ion-col align-self-center="" (click)="openListDetails(list)">
+            {{list?.name}}
+          </ion-col>
+          <button ion-button="" color="danger" (click)="removeList(list)"><ion-icon name="close"></ion-icon></button>
+        </ion-row>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+</ion-content>

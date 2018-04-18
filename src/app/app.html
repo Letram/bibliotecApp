@@ -1,15 +1,17 @@
 <ion-menu [content]="content">
   <ion-header>
     <ion-toolbar>
-      <ion-title>Menu</ion-title>
+      <ion-title>My lists</ion-title>
     </ion-toolbar>
   </ion-header>
 
   <ion-content>
     <ion-list>
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        {{p.title}}
-      </button>
+      <!--favourite books-->
+      <ion-item-divider>Favourite Books</ion-item-divider>
+      <button *ngFor="let book of favouriteBooks" menuClose="" detail-push="" ion-item (click)="openBookDetails(book)">{{book?.name}}</button>
+      <ion-item><button ion-button="" menuClose="" (click)="openListsPage()">My lists!</button></ion-item>
+
     </ion-list>
   </ion-content>
 
