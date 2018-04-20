@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, MenuController, NavController, NavParams } from 'ionic-angular';
 import {UserAuthService} from "../../services/user-auth.service";
 import {User} from "../../shared/models/User";
 import {HomePage} from "../home/home";
@@ -18,15 +18,25 @@ import {HomePage} from "../home/home";
 })
 export class LoginPage {
   user={} as User;
-  constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController, 
+              public navParams: NavParams,
+              public menuCtrl: MenuController, 
               private userAuth: UserAuthService) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
   }
+  
+  ionViewDidEnter(){
+      this.menuCtrl.swipeEnable(false);
+  }
 
+  ionViewWillLeave(){
+    this.menuCtrl.swipeEnable(true);
+  }
 
+  
   login(){
     this.userAuth.signOut();
     this.userAuth.setUser(this.user);
