@@ -5,10 +5,16 @@ import {
   IonicPage,
   LoadingController,
   NavController,
+  Events,
+  ToastController, 
+
   NavParams
 } from 'ionic-angular';
 import {DbApiService} from "../../services/db-api.service";
 import {ListDetailsPage} from "../list-details/list-details";
+
+import {UserSettingsService} from "../../services/user-settings.service";
+import {UserAuthService} from "../../services/user-auth.service";
 
 /**
  * Generated class for the BookDetailsPage page.
@@ -27,9 +33,15 @@ export class BookDetailsPage {
   selectedBook:any;
   bookData:any;
   bookLists:any;
+  favouriteBooks_id:any=[];
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private dbApi: DbApiService,
               private loader: LoadingController,
+
+              private toaster: ToastController,
+              private userSettings: UserSettingsService,
+              private events: Events,
+
               private actionSheetController: ActionSheetController,
               private alertController: AlertController) {}
 
@@ -51,6 +63,11 @@ export class BookDetailsPage {
         loader.dismiss();
       });
     });
+
+this.events.subscribe("favourites:changed", ()=>{
+      this.favouriteBooks_id = this.userSettings.getAllFavourites();
+    });
+    this.favouriteBooks_id = this.userSettings.getAllFavourites();
 
   }
 
@@ -78,4 +95,25 @@ export class BookDetailsPage {
 
     actionSheet.present();
   }
+
+  toggleFavouriteBookDetails() {
+    let sentence = "";
+    if(this.favouriteBooks_id.includes(this.selectedBook.id)){
+      this.userSettings.unfavouriteBook(this.selectedBook);
+      sentence = "\"" + this.selectedBook.name + "\" removed from your favourites!";
+    }else{
+      this.dbApi.getBookData(this.selectedBook.id).subscribe((bookData) => {
+        this.userSettings.favouriteBook(bookData.name, bookData.author, bookData.genre, bookData.publishDate, this.selectedBook.id);
+      });
+      sentence = "\"" + this.selectedBook.name + "\" added to your favourites!";
+    }
+    let toast = this.toaster.create({
+      message: sentence,
+      duration: 3000,
+      position: "bottom"
+    });
+    toast.present();
+    
+  };
 }
+    

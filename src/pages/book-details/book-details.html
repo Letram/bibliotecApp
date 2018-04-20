@@ -39,11 +39,20 @@
         <div>Add to booklist</div>
       </button>
     </ion-col>
+    
     <ion-col center text-center="">
-      <button ion-button="" color="danger" icon-left="">
+      <button ion-button="" color="danger" icon-left=""
+        (click)="toggleFavouriteBookDetails()" *ngIf="!favouriteBooks_id.includes(this.selectedBook)" >
         <ion-icon name="heart"></ion-icon>
         <div>Add to favourites</div>
       </button>
+
+      <button ion-button="" color="dark" icon-left=""
+        (click)="toggleFavouriteBookDetails()" *ngIf="!favouriteBooks_id.includes(this.selectedBook)" >
+        <ion-icon name="close"></ion-icon>
+        <div>Remove from favourites</div>
+      </button>
+
     </ion-col>
   </ion-row>
 </ion-card>
