@@ -29,11 +29,11 @@ export class LoginPage {
   }
   
   ionViewDidEnter(){
-      this.menuCtrl.swipeEnable(false);
+      this.menuCtrl.swipeEnable(false, "sidebar");
   }
 
   ionViewWillLeave(){
-    this.menuCtrl.swipeEnable(true);
+    this.menuCtrl.swipeEnable(true, "sidebar");
   }
 
   

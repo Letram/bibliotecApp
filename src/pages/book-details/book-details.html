@@ -33,17 +33,27 @@
 
   </ion-card-content>
   <ion-row>
-    <ion-col center text-center="">
-      <button ion-button="" icon-left="" (click)="openActionSheet()">
+    <ion-col text-center="" align-items-center="">
+      <button ion-button="" icon-left="" [block]="true"
+              (click)="openActionSheet()">
         <ion-icon name="bookmark"></ion-icon>
         <div>Add to booklist</div>
       </button>
     </ion-col>
+
     <ion-col center text-center="">
-      <button ion-button="" color="danger" icon-left="">
+      <button ion-button="" color="danger" icon-left="" [block]="true" *ngIf="!isFavourite"
+        (click)="toggleFavouriteBookDetails()" >
         <ion-icon name="heart"></ion-icon>
         <div>Add to favourites</div>
       </button>
+
+      <button ion-button="" color="dark" icon-left="" [block]="true" *ngIf="isFavourite"
+              (click)="toggleFavouriteBookDetails()" >
+        <ion-icon name="close"></ion-icon>
+        <div>Remove from favourites</div>
+      </button>
+
     </ion-col>
   </ion-row>
 </ion-card>
