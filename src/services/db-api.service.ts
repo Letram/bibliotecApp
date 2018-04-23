@@ -29,6 +29,13 @@ export class DbApiService {
   }
 
   pushBookToList(bookList: any, bookData: any, bookId: any) {
+    function hasBook(bookList: any, bookId: any) {
+      let res = bookList.books.map((book) => book.id == bookId);
+      return !!res.includes(true);
+
+    }
+
+    if(hasBook(bookList, bookId))return;
     let index = 0;
     if(bookList.books)index = bookList.books.length;
 
