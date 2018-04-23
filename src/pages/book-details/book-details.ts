@@ -6,7 +6,7 @@ import {
   LoadingController,
   NavController,
   Events,
-  ToastController, 
+  ToastController,
 
   NavParams
 } from 'ionic-angular';
@@ -33,7 +33,7 @@ export class BookDetailsPage {
   selectedBook:any;
   bookData:any;
   bookLists:any;
-  favouriteBooks_id:any=[];
+  isFavourite:Boolean;
   constructor(public navCtrl: NavController, public navParams: NavParams,
               private dbApi: DbApiService,
               private loader: LoadingController,
@@ -64,11 +64,14 @@ export class BookDetailsPage {
       });
     });
 
-this.events.subscribe("favourites:changed", ()=>{
-      this.favouriteBooks_id = this.userSettings.getAllFavourites();
+    this.events.subscribe("favourites:changed", ()=>{
+      this.userSettings.isFavouriteBook(this.selectedBook.id).then((data)=>{
+        this.isFavourite=data;
+      });
     });
-    this.favouriteBooks_id = this.userSettings.getAllFavourites();
-
+    this.userSettings.isFavouriteBook(this.selectedBook.id).then((data) => {
+      this.isFavourite = data;
+    });
   }
 
   openActionSheet() {
@@ -98,7 +101,7 @@ this.events.subscribe("favourites:changed", ()=>{
 
   toggleFavouriteBookDetails() {
     let sentence = "";
-    if(this.favouriteBooks_id.includes(this.selectedBook.id)){
+    if(this.isFavourite){
       this.userSettings.unfavouriteBook(this.selectedBook);
       sentence = "\"" + this.selectedBook.name + "\" removed from your favourites!";
     }else{
@@ -113,7 +116,7 @@ this.events.subscribe("favourites:changed", ()=>{
       position: "bottom"
     });
     toast.present();
-    
+
   };
 }
-    
+
