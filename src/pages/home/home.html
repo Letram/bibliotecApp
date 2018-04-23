@@ -7,12 +7,33 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>home</ion-title>
+    <ion-title>Home</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <ion-list>
+    <ion-item *ngFor="let book of books">
+      <ion-row>
+        <ion-col align-self-center="" (click)="bookSelected(book)">
+          {{book?.name}}
+        </ion-col>
+        <button style="margin-top: auto;float: right" ion-button="" color="danger" (click)="toggleFavourite(book)" *ngIf="!favouriteBooks_id.includes(book.id)">
+          <ion-icon name="heart"></ion-icon>
+        </button>
+        <button style="margin-top: auto;float: right" ion-button="" color="dark" (click)="toggleFavourite(book)" *ngIf="favouriteBooks_id.includes(book.id)">
+          <ion-icon name="close"></ion-icon>
+        </button>
+      </ion-row>
+    </ion-item>
+  </ion-list>
 
 </ion-content>
